@@ -1,0 +1,8 @@
+{
+  "event": {
+    "token": "TOKEN",
+    "expectedAction": "USER_ACTION",
+    "siteKey": "6Ld2NWorAAAAAB57ybFv0JAXXoWJM3R7A4SVPVMx",
+    "API_KEY":"https://recaptchaenterprise.googleapis.com/v1/projects/digital-e-gram-panchayat-3e36b/assessments?key=API_KEY"
+  }
+}

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Panel - Digital E Gram Panchayat</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="hero_area">
+     <!-- Header Section -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" href="#">Government of India |&nbsp;<span class="orangefont">Ministry of Panchayati Raj</span></a>
+          <div class="collapse navbar-collapse">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center mr-0">
+              <ul class="navbar-nav navbar-right">
+                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Slider Section -->
+    <section class="slider_section  position-relative">
+      <div class="slider_bg-container">
+        <div class="slider-container">
+          <div class="detail-box">
+            <div class="d-flex-inline">
+              <img  src="sources/indian-government-logo.png" alt="eGramPanchayat" class="invert-black float-left" />
+              <h1 class="mt-1 mb-0 text-left">eGramPanchayat</h1>
+              <h5 class="text-justify">Simplified Work Based On Panchayati Raj</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+        <!-- Search Services -->
+        <section class="search-services">
+            <div class="service-container">
+                <h2>Search Services</h2>
+                <form id="search-form">
+                    <label for="search-input">Enter keyword:</label>
+                    <input type="text" id="search-input" required>
+                    <button type="submit">Search</button>
+                </form>
+                <ul id="search-results"></ul>
+            </div>
+        </section>
+
+        <!-- Apply Services -->
+        <section class="apply-services">
+            <div class="service-container">
+            <h2>Apply for Services</h2>
+            <br>
+            <form class="apply-form" id="apply-form">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" required><br><br>
+
+                <label for="birthYear">Birth Year:</label>
+                <input type="number" id="birthYear" required><br><br>
+
+                <label for="age">Age:</label>
+                <input type="number" id="age" required><br><br>
+
+                <label for="contact">contact-no:</label>
+                <input type="number" id="contact" required><br><br>
+
+                <label for="sex">Sex:</label>
+                <select id="sex" required>
+                    <option value="">--Select--</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select><br><br>
+
+                <label for="residence">Residential Info:</label>
+                <input type="text" id="residence" required><br><br>
+
+                <label for="aadhaar">Aadhaar No:</label>
+                <input type="text" id="aadhaar" required><br><br>
+
+                <label for="pincode">Pin Code:</label>
+                <input type="text" id="pincode" required><br><br>
+
+                <label for="service-name">Service Name:</label>
+                <input type="text" id="service-name" required><br><br>
+
+                <button type="submit">Submit Application</button>
+            </form>
+            </div>
+        </section>
+
+        <!-- Application Status Section -->
+        <section class="application-status">
+            <div class="app-status-container">
+            <h2>My Application Status</h2>
+            <br><br>
+            <form id="status-form">
+                <label for="app-id">Application ID:</label>
+                <input type="text" id="app-id" required>
+                <button type="submit">Check Status</button>
+            </form>
+            <p id="status-result"></p>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section class="user-profile hidden" id="profile-section">
+            <div class="profile-container">
+                <h2>My Profile</h2>
+                <p><strong>Full Name:</strong> <span id="profile-name"></span></p>
+                <p><strong>Age:</strong> <span id="profile-age"></span></p>
+                  <p><strong>contact-no:</strong> <span id="profile-contact"></span></p>
+                <p><strong>Sex:</strong> <span id="profile-sex"></span></p>
+                <p><strong>Email:</strong> <span id="profile-email"></span></p>
+                <p><strong>Aadhaar:</strong> <span id="profile-aadhaar"></span></p>
+                <p><strong>Residence:</strong> <span id="profile-residence"></span></p>
+                <p><strong>Pin Code:</strong> <span id="profile-pincode"></span></p>
+                <p><strong>Application ID:</strong> <span id="profile-appid"></span></p>
+            </div>
+        </section>
+    </main>
+
+     <!-- Footer Section -->
+    <footer>
+      <div class="container">
+        <p>
+             Contents on this website are owned, updated and managed by the Panchayats and State Panchayati Raj Department as a part of eGramPanchayat  of <a class="foot_link"  href="https://panchayat.gov.in/">Ministry of Panchayati Raj (MoPR),</a>. Site is technically designed, hosted and maintained by
+            <a class="foot_link" href="https://www.nic.in/">National Informatics Centre (NIC)</a>
+        </p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Terms & Conditions</a></li>
+          <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+          <li class="list-inline-item"><a href="#">Web Policy</a></li>
+          <li class="list-inline-item"><a href="#">Contact Us</a></li>
+          <li class="list-inline-item"><a href="#">Web Information Manager</a></li>
+        </ul>
+        <div class="footer-bottom">
+          <p>&copy; 2025 eGramPanchayat | Ministry of Panchayati Raj, Government of India</p>
+        </div>
+      </div>
+    </footer>
+    </div>
+    <!-- Firebase Firestore Integration -->
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+      import { getFirestore, collection, addDoc, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+      import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyB8l9_sEktO_dA5s0eukTyp2_gbXGQP88c",
+        authDomain: "digital-e-gram-panchayat-3e36b.firebaseapp.com",
+        projectId: "digital-e-gram-panchayat-3e36b",
+        storageBucket: "digital-e-gram-panchayat-3e36b.appspot.com",
+        messagingSenderId: "999864577269",
+        appId: "1:999864577269:web:85d04119ed8c76e77b69bc",
+        measurementId: "G-KYL8BC17Q0"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      const auth = getAuth();
+
+      onAuthStateChanged(auth, async (user) => {
+        const profileSection = document.getElementById('profile-section');
+        if (user) {
+          try {
+            const userDoc = await getDoc(doc(db, "users", user.uid));
+            if (userDoc.exists()) {
+              const data = userDoc.data();
+              document.getElementById('profile-email').textContent = user.email;
+              document.getElementById('profile-name').textContent = data.name || "";
+              document.getElementById('profile-age').textContent = data.age || "";
+               document.getElementById('profile-contact').textContent = data.contact || "";
+              document.getElementById('profile-sex').textContent = data.sex || "";
+              document.getElementById('profile-residence').textContent = data.residence || "";
+              document.getElementById('profile-aadhaar').textContent = data.aadhaar || "";
+              document.getElementById('profile-pincode').textContent = data.pincode || "";
+              document.getElementById('profile-appid').textContent = data.applicationId || "";
+              profileSection.classList.remove('hidden');
+            }
+          } catch (err) {
+            console.error("Error loading user profile: ", err);
+          }
+        } else {
+          profileSection.classList.add('hidden');
+        }
+      });
+
+      document.getElementById('apply-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const user = auth.currentUser;
+        if (!user) {
+          alert("You must be logged in to submit an application.");
+          return;
+        }
+
+        const name = document.getElementById('name').value.trim();
+        const birthYear = document.getElementById('birthYear').value.trim();
+        const age = document.getElementById('age').value.trim();
+        const contact = document.getElementById('contact').value.trim();
+        const sex = document.getElementById('sex').value;
+        const residence = document.getElementById('residence').value.trim();
+        const aadhaar = document.getElementById('aadhaar').value.trim();
+        const pincode = document.getElementById('pincode').value.trim();
+        const serviceName = document.getElementById('service-name').value.trim();
+
+        const applicationId = name.replace(/\s+/g, '').toLowerCase() + birthYear;
+
+        try {
+          await addDoc(collection(db, "applications"), {
+            userId: user.uid,
+            applicationId,
+            name,
+            birthYear,
+            age,
+            contact,
+            sex,
+            residence,
+            aadhaar,
+            pincode,
+            serviceName,
+            status: "pending",
+            createdAt: new Date()
+          });
+
+          await setDoc(doc(db, "users", user.uid), {
+            name,
+            birthYear,
+            age,
+            contact,
+            sex,
+            residence,
+            aadhaar,
+            pincode,
+            email: user.email,
+            applicationId
+          });
+
+          alert("Application submitted successfully! Your Application ID is: " + applicationId);
+          e.target.reset();
+        } catch (err) {
+          console.error("Error submitting application: ", err);
+          alert("Failed to submit application.");
+        }
+      });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Officer/Admin Panel - eGramPanchayat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <div class="hero_area">
+<!-- Header Section -->
+<header class="header_section">
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg custom_nav-container">
+      <a class="navbar-brand" href="#">Government of India |&nbsp;<span class="orangefont">Ministry of Panchayati Raj</span></a>
+      <div class="collapse navbar-collapse">
+        <div class="d-flex ml-auto flex-column flex-lg-row align-items-center mr-0">
+          <ul class="navbar-nav navbar-right">
+            <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Slider Section -->
+<section class="slider_section position-relative">
+  <div class="slider_bg-container">
+    <div class="slider-container">
+      <div class="detail-box">
+        <div class="d-flex-inline">
+          <img src="sources/indian-government-logo.png" alt="eGramPanchayat" class="invert-black float-left" />
+          <h1 class="mt-1 mb-0 text-left">eGramPanchayat</h1>
+          <h5 class="text-justify">Simplified Work Based On Panchayati Raj</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Create Service -->
+<section class="create-services">
+  <div class="service-container">
+    <h2>Create Services</h2>
+    <br>
+    <form id="create-service-form" class="service-form">
+      <label for="service-id">Service ID:</label>
+      <input type="text" id="service-id" required><br>
+
+      <label for="service-name">Service Name:</label>
+      <input type="text" id="service-name" required><br>
+
+      <label for="service-type">Service Type:</label>
+      <input type="text" id="service-type" required><br>
+
+      <label for="duration">Duration:</label>
+      <input type="text" id="duration" required><br>
+
+      <label for="status">Status:</label>
+      <input type="text" id="status" required><br>
+
+      <label for="service-desc">Description:</label>
+      <textarea id="service-desc" required></textarea><br>
+
+      <label for="state">State:</label>
+      <input type="text" id="state" required><br>
+
+      <label for="district">District:</label>
+      <input type="text" id="district" required><br>
+
+      <label for="block">Block/Taluka:</label>
+      <input type="text" id="block" required><br>
+
+      <label for="gp">Gram Panchayat Name:</label>
+      <input type="text" id="gp" required><br>
+
+      <label for="village">Village/Ward:</label>
+      <input type="text" id="village" required><br>
+
+      <label for="approved-by">Approved By:</label>
+      <input type="text" id="approved-by" required><br>
+
+      <label for="officer-id">Officer ID :</label>
+      <input type="text" id="officer-id" required><br>
+
+      <label for="contact">Contact Number:</label>
+      <input type="text" id="contact" required><br>
+
+      <button type="submit">Create Service</button>
+    </form>
+  </div>
+</section>
+
+<!-- View/Update/Delete Services -->
+<section class="view-services">
+  <div class="service-container">
+    <h2>Update/Delete Services</h2>
+    <div id="service-list"></div>
+  </div>
+</section>
+
+
+<!-- Update Application Status -->
+<section class="update-status">
+  <div class="status-container">
+    <h2>Update Application Status</h2>
+    <br>
+    <form id="update-status-form">
+      <label for="application-id">Application ID:</label>
+      <input type="text" id="application-id" required><br>
+      <label for="new-status">New Status:</label>
+      <select id="new-status" required>
+        <option value="">--Select--</option>
+        <option value="pending">Pending</option>
+        <option value="approved">Approved</option>
+        <option value="rejected">Rejected</option>
+      </select><br>
+      <button type="submit">Update Status</button>
+    </form>
+  </div>
+</section>
+
+ <section class="applications-list">
+    <div class="application-container">
+            <h2>Applications List</h2>
+            <ul id="application-list">
+            </ul>
+    </div>
+        </section>
+<!-- Footer Section -->
+<footer>
+  <div class="container">
+     <p>
+      Contents on this website are owned, updated and managed by the Panchayats and State Panchayati Raj Department as a part of eGramPanchayat  of <a class="foot_link"  href="https://panchayat.gov.in/">Ministry of Panchayati Raj (MoPR),</a>. Site is technically designed, hosted and maintained by
+      <a class="foot_link" href="https://www.nic.in/">National Informatics Centre (NIC)</a>
+    </p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="#">Terms & Conditions</a></li>
+      <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+      <li class="list-inline-item"><a href="#">Web Policy</a></li>
+      <li class="list-inline-item"><a href="#">Contact Us</a></li>
+      <li class="list-inline-item"><a href="#">Web Information Manager</a></li>
+    </ul>
+    <div class="footer-bottom">
+      <p>&copy; 2025 eGramPanchayat | Ministry of Panchayati Raj, Government of India</p>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script type="module">
+  import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+  import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, getDocs, query, where } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB8l9_sEktO_dA5s0eukTyp2_gbXGQP88c",
+    authDomain: "digital-e-gram-panchayat-3e36b.firebaseapp.com",
+    projectId: "digital-e-gram-panchayat-3e36b",
+    storageBucket: "digital-e-gram-panchayat-3e36b.appspot.com",
+    messagingSenderId: "999864577269",
+    appId: "1:999864577269:web:85d04119ed8c76e77b69bc",
+    measurementId: "G-KYL8BC17Q0"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+ // Fetch all applications and display them
+      async function renderApplications() {
+        const list = document.getElementById('application-list');
+        list.innerHTML = "";
+        const querySnapshot = await getDocs(collection(db, "applications"));
+        querySnapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          const li = document.createElement('li');
+          li.textContent = `Application ID: ${data.applicationId} | ${data.name} | Status: ${data.status}`;
+          list.appendChild(li);
+        });
+      }
+
+      // Initial render
+      renderApplications();
+
+  document.getElementById('update-status-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const appId = document.getElementById('application-id').value.trim().toLowerCase();
+    const status = document.getElementById('new-status').value;
+
+    try {
+      const q = query(collection(db, "applications"), where("applicationId", "==", appId));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const docSnap = querySnapshot.docs[0];
+        await updateDoc(doc(db, "applications", docSnap.id), {
+          status: status,
+          updatedAt: new Date()
+        });
+        alert("Application status updated successfully!");
+      } else {
+        alert("Application ID not found in the database. Make sure the ID is in lowercase format like 'user2000'.");
+      }
+      e.target.reset();
+    } catch (err) {
+      console.error("Error updating document: ", err);
+      alert("Failed to update application status.");
+    }
+  });
+
+  async function loadServices() {
+    const list = document.getElementById('service-list');
+    list.innerHTML = '';
+    const snapshot = await getDocs(collection(db, "services"));
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      const div = document.createElement('div');
+      div.className = 'service-item';
+      div.innerHTML = `
+        <strong>${data.name}</strong>
+        <p>${data.description}</p>
+        <textarea id="edit-${docSnap.id}">${data.description}</textarea>
+        <button onclick="updateService('${docSnap.id}')">Update</button>
+        <button onclick="deleteService('${docSnap.id}')">Delete</button>
+      `;
+      list.appendChild(div);
+    });
+  }
+
+  document.getElementById('create-service-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const service = {
+      serviceId: document.getElementById('service-id').value.trim(),
+      name: document.getElementById('service-name').value.trim(),
+      type: document.getElementById('service-type').value.trim(),
+      duration: document.getElementById('duration').value.trim(),
+      status: document.getElementById('status').value.trim(),
+      description: document.getElementById('service-desc').value.trim(),
+      state: document.getElementById('state').value.trim(),
+      district: document.getElementById('district').value.trim(),
+      block: document.getElementById('block').value.trim(),
+      gramPanchayat: document.getElementById('gp').value.trim(),
+      village: document.getElementById('village').value.trim(),
+      approvedBy: document.getElementById('approved-by').value.trim(),
+      officerId: document.getElementById('officer-id').value.trim(),
+      contact: document.getElementById('contact').value.trim(),
+      createdAt: new Date()
+    };
+
+    try {
+      await addDoc(collection(db, "services"), service);
+      alert("Service created successfully!");
+      e.target.reset();
+      loadServices();
+    } catch (err) {
+      console.error("Error adding document: ", err);
+      alert("Failed to create service.");
+    }
+  });
+
+  window.updateService = async (id) => {
+    const newDesc = document.getElementById(`edit-${id}`).value.trim();
+    if (!newDesc) return alert("Please enter a description");
+    try {
+      await updateDoc(doc(db, "services", id), {
+        description: newDesc,
+        updatedAt: new Date()
+      });
+      alert("Service updated successfully.");
+      loadServices();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update.");
+    }
+  };
+
+  window.deleteService = async (id) => {
+    if (!confirm("Are you sure you want to delete this service?")) return;
+    try {
+      await deleteDoc(doc(db, "services", id));
+      alert("Service deleted successfully.");
+      loadServices();
+    } catch (err) {
+      console.error(err);
+      alert("Failed to delete.");
+    }
+  };
+
+  loadServices();
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Panel - Digital E Gram Panchayat</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="hero_area">
+     <!-- Header Section -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" href="#">Government of India |&nbsp;<span class="orangefont">Ministry of Panchayati Raj</span></a>
+          <div class="collapse navbar-collapse">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center mr-0">
+              <ul class="navbar-nav navbar-right">
+                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+ 
+    <!-- Slider Section -->
+    <section class="slider_section  position-relative">
+      <div class="slider_bg-container">
+        <div class="slider-container">
+          <div class="detail-box">
+            <div class="d-flex-inline">
+              <img  src="sources/indian-government-logo.png" alt="eGramPanchayat" class="invert-black float-left" />
+              <h1 class="mt-1 mb-0 text-left">eGramPanchayat</h1>
+              <h5 class="text-justify">Simplified Work Based On Panchayati Raj</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <main>
+        <section class="update-application-status">
+            <div class="application-container">
+            <h2>Update Application Status</h2>
+            <br>
+            <form id="update-status-form">
+                <label for="application-id">Application ID:</label>
+                <input type="text" id="application-id" name="application-id" required>
+                <br><br>
+                <label for="new-status">New Status:</label>
+                <select id="new-status" name="new-status" required>
+                    <option value="">--Select--</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+                <br><br>
+                <button type="submit">Update Status</button>
+            </form>
+            </div>
+        </section>
+
+      <section class="applications-list">
+    <div class="application-container">
+            <h2>Applications List</h2>
+            <ul id="application-list">
+            </ul>
+    </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+      <div class="container">
+         <p>
+             Contents on this website are owned, updated and managed by the Panchayats and State Panchayati Raj Department as a part of eGramPanchayat  of <a class="foot_link"  href="https://panchayat.gov.in/">Ministry of Panchayati Raj (MoPR),</a>. Site is technically designed, hosted and maintained by
+            <a class="foot_link" href="https://www.nic.in/">National Informatics Centre (NIC)</a>
+        </p>
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="#">Terms & Conditions</a></li>
+          <li class="list-inline-item"><a href="#">Privacy Policy</a></li>
+          <li class="list-inline-item"><a href="#">Web Policy</a></li>
+          <li class="list-inline-item"><a href="#">Contact Us</a></li>
+          <li class="list-inline-item"><a href="#">Web Information Manager</a></li>
+        </ul>
+        <div class="footer-bottom">
+          <p>&copy; 2025 eGramPanchayat | Ministry of Panchayati Raj, Government of India</p>
+        </div>
+      </div>
+    </footer>
+    </div>
+    <!-- Firebase Firestore Integration -->
+    <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+      import { getFirestore, collection, getDocs, doc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyB8l9_sEktO_dA5s0eukTyp2_gbXGQP88c",
+        authDomain: "digital-e-gram-panchayat-3e36b.firebaseapp.com",
+        projectId: "digital-e-gram-panchayat-3e36b",
+        storageBucket: "digital-e-gram-panchayat-3e36b.appspot.com",
+        messagingSenderId: "999864577269",
+        appId: "1:999864577269:web:85d04119ed8c76e77b69bc",
+        measurementId: "G-KYL8BC17Q0"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // Fetch all applications and display them
+      async function renderApplications() {
+        const list = document.getElementById('application-list');
+        list.innerHTML = "";
+        const querySnapshot = await getDocs(collection(db, "applications"));
+        querySnapshot.forEach((docSnap) => {
+          const data = docSnap.data();
+          const li = document.createElement('li');
+          li.textContent = `Application ID: ${data.applicationId} | ${data.name} | Status: ${data.status}`;
+          list.appendChild(li);
+        });
+      }
+
+      // Initial render
+      renderApplications();
+
+      // Update application status
+      document.getElementById('update-status-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const appId = document.getElementById('application-id').value.trim();
+        const newStatus = document.getElementById('new-status').value;
+
+        const querySnapshot = await getDocs(collection(db, "applications"));
+        let docId = null;
+        querySnapshot.forEach((docSnap) => {
+          if (docSnap.data().applicationId === appId) {
+            docId = docSnap.id;
+          }
+        });
+
+        if (!docId) {
+          alert("Application ID not found.");
+          return;
+        }
+
+        try {
+          const ref = doc(db, "applications", docId);
+          await updateDoc(ref, {
+            status: newStatus,
+            updatedAt: new Date()
+          });
+          alert("Status updated successfully!");
+          renderApplications();
+          e.target.reset();
+        } catch (err) {
+          console.error("Error updating application status:", err);
+          alert("Failed to update application status.");
+        }
+      });
+    </script>
+</body>
+</html>

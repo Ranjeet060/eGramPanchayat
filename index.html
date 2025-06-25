@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="E-Gram Panchayat is a digital platform for managing village panchayat services and information." />
+  <meta name="keywords" content="E-Gram Panchayat, digital panchayat, village services, online panchayat, panchayat management" />
+  <title>eGramPanchayat</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.google.com/recaptcha/enterprise.js?render=6Ld2NWorAAAAAB57ybFv0JAXXoWJM3R7A4SVPVMx"></script>
+   <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Firebase SDK -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
+  import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import {
+    getFirestore,
+    setDoc,
+    doc,
+    getDoc
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyB8l9_sEktO_dA5s0eukTyp2_gbXGQP88c",
+    authDomain: "digital-e-gram-panchayat-3e36b.firebaseapp.com",
+    projectId: "digital-e-gram-panchayat-3e36b",
+    storageBucket: "digital-e-gram-panchayat-3e36b.appspot.com",
+    messagingSenderId: "999864577269",
+    appId: "1:999864577269:web:85d04119ed8c76e77b69bc",
+    measurementId: "G-KYL8BC17Q0"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  // Auth Handler
+  window.handleAuth = async function (action) {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const role = document.getElementById("role")?.value || "User";
+
+    if (!email || !password) return alert("Enter email and password.");
+
+    try {
+      if (action === "signup") {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, "users", userCred.user.uid), {
+          email: email,
+          role: role
+        });
+        alert(` Sign up successful! Role: ${role}`);
+      } else {
+        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        const userDoc = await getDoc(doc(db, "users", userCred.user.uid));
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          alert(` Logged in as: ${userData.role}`);
+
+          // Redirect based on role
+           if (userData.role === "Officer") window.location.href = "admin.html";
+           else if (userData.role === "Staff") window.location.href = "staff.html";
+           else window.location.href = "user.html";
+        } else {
+          alert(" User role not found.");
+        }
+      }
+    } catch (err) {
+      console.error(err);
+      alert("invalid Email or password. " + err.message);
+    }
+  };
+</script>
+
+
+</head>
+
+<body>
+  <div class="hero_area">
+    <!-- Header Section -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+          <a class="navbar-brand" href="#">Government of India |&nbsp;<span class="orangefont">Ministry of Panchayati Raj</span></a>
+          <div class="collapse navbar-collapse">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center mr-0">
+              <ul class="navbar-nav navbar-right">
+                <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+ 
+    <!-- Slider Section -->
+    <section class="slider_section  position-relative">
+      <div class="slider_bg-container">
+        <div class="slider-container">
+          <div class="detail-box">
+            <div class="d-flex-inline">
+              <img  src="sources/indian-government-logo.png" alt="eGramPanchayat" class="invert-black float-left" />
+              <h1 class="mt-1 mb-0 text-left">eGramPanchayat</h1>
+              <h5 class="text-justify">Simplified Work Based On Panchayati Raj</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- Sign In / Sign Up Section -->
+    <section class="auth-section">
+      <div class="auth-container">
+        <h2>User Authentication</h2>
+        <form id="authForm">
+          <input type="email" id="email" placeholder="Email" required />
+          <input type="password" id="password" placeholder="Password" required />
+          <!-- Captcha -->
+            <div style="margin-top: 10px;">
+              <label id="captcha-question" data-answer=""></label><br>
+              <input type="text" id="captcha" placeholder="Enter CAPTCHA answer" required />
+            </div>
+            <select id="role" required>
+           <option value="User">User</option>
+           <option value="Staff">Staff</option>
+           <option value="Officer">Officer</option>
+          </select>
+          <button type="button" onclick="handleAuth('signup')">Sign Up</button>
+          <button type="button" onclick="handleAuth('signin')">Sign In</button>
+        </form>
+
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+  <footer>
+	<div class="container">
+		 <p>
+             Contents on this website are owned, updated and managed by the Panchayats and State Panchayati Raj Department as a part of eGramPanchayat  of <a class="foot_link"  href="https://panchayat.gov.in/">Ministry of Panchayati Raj (MoPR),</a>. Site is technically designed, hosted and maintained by
+            <a class="foot_link" href="https://www.nic.in/">National Informatics Centre (NIC)</a>
+        </p>
+    <ul class="list-inline">
+			<li class="list-inline-item">
+				<a href="#" data-toggle="modal" data-target="#quickModal" id="One" onClick="allPolicies(this.id)">Terms & Conditions</a>
+			</li>
+			<li class="list-inline-item">
+				<a href="#" data-toggle="modal" data-target="#quickModal" onClick="allPolicies(this.id)" id="Two">Privacy Policy</a>
+			</li>
+
+			<li class="list-inline-item">
+				<a href="#" data-toggle="modal" data-target="#quickModal" id="Three" onClick="allPolicies(this.id)">Web Policy</a>
+			</li>
+
+			<li class="list-inline-item">
+				<a href="#" data-toggle="modal" data-target="#quickModal" onClick="allPolicies(this.id)" id="Four">Contact Us</a>
+			</li>
+			<li class="list-inline-item">
+				<a href="#" data-toggle="modal" data-target="#quickModal" onClick="allPolicies(this.id)" id="Five">Web Information Manager</a>
+			</li>
+		</ul>
+     <div class="footer-bottom">
+      <p>&copy; 2025 eGramPanchayat | Ministry of Panchayati Raj, Government of India</p>
+    </div>
+	</div>
+</footer>
+</div>
+</body>
+ <script>
+  // Generate simple CAPTCHA
+  function generateCaptcha() {
+    const a = Math.floor(Math.random() * 10 + 1);
+    const b = Math.floor(Math.random() * 10 + 1);
+    const result = a + b;
+    document.getElementById("captcha-question").innerText = `What is ${a} + ${b}?`;
+    document.getElementById("captcha-question").dataset.answer = result;
+  }
+
+  // Call once on page load
+  window.onload = generateCaptcha;
+
+  async function handleAuth(action) {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const role = document.getElementById("role")?.value || "User";
+    const captchaInput = document.getElementById("captcha").value.trim();
+    const correctAnswer = document.getElementById("captcha-question").dataset.answer;
+
+    if (!email || !password || !captchaInput) {
+      alert("Please fill all fields including CAPTCHA.");
+      return;
+    }
+
+    if (parseInt(captchaInput) !== parseInt(correctAnswer)) {
+      alert("Incorrect CAPTCHA. Try again.");
+      generateCaptcha();
+      return;
+    }
+
+    try {
+      if (action === "signup") {
+        const userCred = await createUserWithEmailAndPassword(auth, email, password);
+        await setDoc(doc(db, "users", userCred.user.uid), {
+          email: email,
+          role: role
+        });
+        alert(`Sign up successful! Role: ${role}`);
+      } else {
+        const userCred = await signInWithEmailAndPassword(auth, email, password);
+        const userDoc = await getDoc(doc(db, "users", userCred.user.uid));
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+                    if (!userData.role) {
+              alert("User role is missing in the database. Please contact admin.");
+              return;
+            }
+            alert(`Logged in as: ${userData.role}`);
+              // Role-based redirect
+              if (userData.role === "Officer") {
+            alert(" Admin login successful!");
+            window.location.href = "admin.html";
+          } else if (userData.role === "Staff") {
+            window.location.href = "staff.html";
+          } else {
+            window.location.href = "user.html";
+          }
+          } else {
+            alert("User record not found in database.");
+          }
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Invalid Email or Password. " + err.message);
+    }
+
+    generateCaptcha(); // refresh CAPTCHA after each try
+  }
+</script>
+
+ <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- fontawasome styles-->
+  <script src="https://kit.fontawesome.com/e5b9d74181.js" crossorigin="anonymous"></script>
+</html>
