@@ -52,6 +52,6 @@ Officers have full access, staff have limited rights
 Notification System :
 Auto-alerts on status changes using Firestore triggers
 
-🛠️ Technology Stack: Tech Role HTML/CSS : Front-end UI JavaScript : Client-side logic Firebase Authentication : Login & Role Handling Firebase Firestore : Real-time NoSQL database Firebase Hosting : Website deployment Firebase Cloud Functions : Background operations GitHub Actions : CI/CD for auto-deploy VS Code / GitHub : Development & version control
+🛠️ Technology Stack: Tech Role HTML/CSS : Front-end UI JavaScript : Client-side logic Firebase Authentication : Login & Role Handling Firebase Firestore : Real-time NoSQL database .
 
 🔒 Security & Access Control: Officer can access all services and applications. Staff can only access assigned service types (controlled via Firestore roles). Users can only view and track their own applications. Firestore Security Rules ensure data separation and access protection.
