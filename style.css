@@ -265,6 +265,62 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
         position: relative;
     }
 }
+
+/* Responsive Design - Tablets and below */
+@media (max-width: 992px) {
+  .slider_section .slider_bg-container {
+    clip-path: none;
+    background: linear-gradient(135deg, #fee185, #f9be00);
+    height: auto;
+    padding: 20px 15px;
+    position: relative;
+  }
+
+  .slider_section .slider-container {
+    flex-direction: column;
+    padding: 0;
+    align-items: center;
+    text-align: center;
+  }
+
+  .slider_section .detail-box {
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    background: transparent;
+  }
+
+  .slider_section .detail-box img {
+    width: 60px;
+    float: none;
+    margin-bottom: 10px;
+  }
+
+  .slider_section .detail-box h1 {
+    font-size: 1.8rem;
+    text-align: center;
+  }
+
+  .slider_section .detail-box h5 {
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 576px) {
+  .slider_section .detail-box img {
+    width: 50px;
+  }
+
+  .slider_section .detail-box h1 {
+    font-size: 1.5rem;
+  }
+
+  .slider_section .detail-box h5 {
+    font-size: 0.95rem;
+  }
+}
 .float-left {
     float: left !important;
 }
@@ -465,6 +521,87 @@ img {
   position: relative;
   z-index: 2;
 }
+
+/* For tablets and below */
+@media (max-width: 992px) {
+
+  .service-container,
+  .status-container,
+  .application-container,
+  .app-status-container,
+  .profile-container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .auth-container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  input, select, textarea, button {
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .service-form input,
+  .status-form input,
+  .application-form input,
+  .apply-form input,
+  .apply-form select,
+  .apply-form textarea {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .service-form button,
+  .status-form button,
+  .application-form button,
+  .apply-form button {
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .service-item {
+    padding: 10px;
+    margin-bottom: 15px;
+    font-size: 0.95rem;
+  }
+
+  footer .list-inline {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  footer p {
+    font-size: 0.9rem;
+  }
+
+  .footer-bottom p {
+    font-size: 0.8rem;
+  }
+}
+
+/* For mobile devices */
+@media (max-width: 576px) {
+
+  .service-container,
+  .status-container,
+  .application-container,
+  .auth-container {
+    padding: 15px;
+  }
+
+  input, select, textarea, button {
+    font-size: 0.95rem;
+  }
+
+  footer .list-inline-item a {
+    font-size: 0.85rem;
+  }
+}
+
 footer {
   background-color: var(--dark); 
   color: var(--light);           
